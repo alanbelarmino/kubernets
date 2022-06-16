@@ -1,10 +1,15 @@
 apiVersion: v1
-kind: Service
+kind: Pod
 metadata:
-  name: svc-db-noticias
+  name: sistema-noticias
+  labels:
+    app: sistema-noticias
 spec:
-  type: ClusterIP
-  ports:
-    - port: 3306
-  selector:
-    app: db-noticias
+  containers:
+    - name: sistema-noticias-container
+      image: aluracursos/sistema-noticias:1
+      ports:
+        - containerPort: 80
+      envFrom:
+        - configMapRef:
+            name: sistema-configmap
